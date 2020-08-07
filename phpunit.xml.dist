@@ -11,7 +11,7 @@
         failOnRisky="true"
         failOnWarning="true"
 >
-    <testsuite name="Open Code Modeling Code AST - Test Suite">
+    <testsuite name="Event Engine - PHP InspectIO Graph Test Suite">
         <directory suffix=".php">./tests</directory>
     </testsuite>
 
