@@ -42,11 +42,15 @@
     },
     "require-dev": {
         "phpspec/prophecy-phpunit": "^2.0",
+        "open-code-modeling/php-code-generator": "*",
         "phpstan/phpstan": "^0.12.33",
         "phpstan/phpstan-strict-rules": "^0.12.4",
         "phpunit/phpunit": "^9.2.6",
         "prooph/php-cs-fixer-config": "^0.3",
         "roave/security-advisories": "dev-master"
+    },
+    "suggest": {
+        "open-code-modeling/php-code-generator": "To use the static factory methods of Transformator classes for Code Generator workflow configuration"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
