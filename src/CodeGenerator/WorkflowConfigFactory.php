@@ -24,17 +24,25 @@ use OpenCodeModeling\CodeGenerator\Config\Component;
 
 final class WorkflowConfigFactory
 {
+    /**
+     * Slot for the \Fhaculty\Graph\Graph instance
+     */
     public const SLOT_GRAPH = 'inspectio_graph-event_sourcing_graph';
+
+    /**
+     * Slot for the \EventEngine\InspectioGraph\EventSourcingAnalyzer instance
+     */
     public const SLOT_EVENT_SOURCING_ANALYZER = 'inspectio_graph-event_sourcing_analyzer';
 
     /**
-     * Configures the workflow for event engine prototype flavour with common options.
+     * Configures a workflow to transform a GraphML XML string to an EventSourcingAnalyzer instance which is put to the
+     * slot WorkflowConfigFactory::SLOT_EVENT_SOURCING_ANALYZER.
      *
      * @param string $inputSlotGraphMlXml Input slot name for GraphML XML document
      * @param callable $filterConstName
      * @return Component
      */
-    public static function prototypeConfig(
+    public static function graphMlXmlToEventSourcingAnalyzer(
         string $inputSlotGraphMlXml,
         callable $filterConstName
     ): Component {
