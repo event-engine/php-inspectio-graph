@@ -12,5 +12,15 @@ namespace EventEngine\InspectioGraph;
 
 final class Event extends Vertex
 {
-    public const TYPE = self::TYPE_EVENT;
+    protected const TYPE = self::TYPE_EVENT;
+
+    /**
+     * @var Metadata\EventMetadata|null
+     */
+    protected $metadataInstance;
+
+    public function metadataInstance(): ?Metadata\EventMetadata
+    {
+        return $this->metadataInstance;
+    }
 }

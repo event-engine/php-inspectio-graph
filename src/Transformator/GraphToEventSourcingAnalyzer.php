@@ -28,10 +28,19 @@ final class GraphToEventSourcingAnalyzer
      **/
     private $filterName;
 
-    public function __construct(Validator $validator, callable $filterName)
-    {
+    /**
+     * @var callable
+     **/
+    private $metadataFactory;
+
+    public function __construct(
+        Validator $validator,
+        callable $filterName,
+        ?callable $metadataFactory
+    ) {
         $this->validator = $validator;
         $this->filterName = $filterName;
+        $this->metadataFactory = $metadataFactory;
     }
 
     public function __invoke(Graph\Graph $graph): EventSourcingAnalyzer
@@ -40,18 +49,20 @@ final class GraphToEventSourcingAnalyzer
             throw new RuntimeException('Graph is invalid.');
         }
 
-        return new EventSourcingAnalyzer($graph, $this->filterName);
+        return new EventSourcingAnalyzer($graph, $this->filterName, $this->metadataFactory);
     }
 
     public static function workflowComponentDescription(
         Validator $validator,
         callable $filterName,
+        ?callable $metadataFactory,
         string $inputGraphml,
         string $output
     ): Workflow\Description {
         $instance = new self(
             $validator,
-            $filterName
+            $filterName,
+            $metadataFactory
         );
 
         return new Workflow\ComponentDescriptionWithSlot(
