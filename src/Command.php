@@ -10,34 +10,17 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph;
 
-use Fhaculty\Graph;
-
 final class Command extends Vertex
 {
-    public const TYPE = self::TYPE_COMMAND;
+    protected const TYPE = self::TYPE_COMMAND;
 
     /**
-     * @var bool
+     * @var Metadata\CommandMetadata|null
      */
-    private $initial = false;
+    protected $metadataInstance;
 
-    protected function init(
-        Graph\Vertex $vertex,
-        callable $filterName
-    ): void {
-        $this->initial = (bool) $vertex->getAttribute('initial');
-    }
-
-    public function initial(): bool
+    public function metadataInstance(): ?Metadata\CommandMetadata
     {
-        return $this->initial;
-    }
-
-    public function withInitial(bool $initial = true): self
-    {
-        $self = clone $this;
-        $self->initial = $initial;
-
-        return $self;
+        return $this->metadataInstance;
     }
 }

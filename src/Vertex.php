@@ -11,14 +11,11 @@ declare(strict_types=1);
 namespace EventEngine\InspectioGraph;
 
 use EventEngine\InspectioGraph\Exception\RuntimeException;
+use EventEngine\InspectioGraph\Metadata\Metadata;
 use Fhaculty\Graph;
 
-abstract class Vertex
+abstract class Vertex implements VertexType
 {
-    public const TYPE_AGGREGATE = 'aggregate';
-    public const TYPE_EVENT = 'event';
-    public const TYPE_COMMAND = 'command';
-
     /**
      * @var string
      */
@@ -39,20 +36,34 @@ abstract class Vertex
      */
     protected $name;
 
+    /**
+     * Arbitrary user metadata e. g. JSON schema
+     *
+     * @var string
+     */
+    protected $metadata;
+
+    /**
+     * @var mixed
+     */
+    protected $metadataInstance;
+
     public static function fromGraphVertex(
         Graph\Vertex $vertex,
-        callable $filterName
+        callable $filterName,
+        ?callable $metadataFactory = null
     ): Vertex {
-        $label = (string) $vertex->getAttribute('label');
+        $label = (string) $vertex->getAttribute(VertexType::ATTRIBUTE_LABEL);
+        $type = (string) $vertex->getAttribute(VertexType::ATTRIBUTE_TYPE);
 
-        switch ($vertex->getAttribute('type')) {
-            case Command::TYPE:
+        switch ($type) {
+            case VertexType::TYPE_COMMAND:
                 $class = Command::class;
                 break;
-            case Aggregate::TYPE:
+            case VertexType::TYPE_AGGREGATE:
                 $class = Aggregate::class;
                 break;
-            case Event::TYPE:
+            case VertexType::TYPE_EVENT:
                 $class = Event::class;
                 break;
             default:
@@ -62,12 +73,12 @@ abstract class Vertex
         /** @var Vertex $self  */
         $self = new $class(
             $vertex->getId(),
-            (string) $vertex->getAttribute('type'),
+            $type,
             $label,
             ($filterName)($label)
         );
 
-        $self->init($vertex, $filterName);
+        $self->init($vertex, $filterName, $metadataFactory);
 
         return $self;
     }
@@ -90,11 +101,22 @@ abstract class Vertex
      *
      * @param Graph\Vertex $vertex
      * @param callable $filterName
+     * @param callable|null $metadataFactory
      */
     protected function init(
         Graph\Vertex $vertex,
-        callable $filterName
+        callable $filterName,
+        ?callable $metadataFactory
     ): void {
+        $this->metadata = (string) $vertex->getAttribute(VertexType::ATTRIBUTE_METADATA);
+
+        if (null !== $metadataFactory) {
+            $this->metadataInstance = $metadataFactory($vertex, $filterName);
+
+            if (! $this->metadataInstance instanceof Metadata) {
+                throw new RuntimeException(\sprintf('Metadata instance must implement \EventEngine\InspectioGraph\Metadata\Metadata interface.'));
+            }
+        }
     }
 
     public function id(): string
@@ -125,5 +147,13 @@ abstract class Vertex
     public function name(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function metadata(): string
+    {
+        return $this->metadata;
     }
 }

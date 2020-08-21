@@ -40,11 +40,13 @@ final class WorkflowConfigFactory
      *
      * @param string $inputSlotGraphMlXml Input slot name for GraphML XML document
      * @param callable $filterConstName
+     * @param callable|null $metadataFactory
      * @return Component
      */
     public static function graphMlXmlToEventSourcingAnalyzer(
         string $inputSlotGraphMlXml,
-        callable $filterConstName
+        callable $filterConstName,
+        ?callable $metadataFactory = null
     ): Component {
         $componentDescription = [
             // Configure model validation
@@ -56,6 +58,7 @@ final class WorkflowConfigFactory
             Transformator\GraphToEventSourcingAnalyzer::workflowComponentDescription(
                 self::defaultValidator(),
                 $filterConstName,
+                $metadataFactory,
                 self::SLOT_GRAPH,
                 self::SLOT_EVENT_SOURCING_ANALYZER
             ),

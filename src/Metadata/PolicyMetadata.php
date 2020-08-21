@@ -8,19 +8,9 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph;
+namespace EventEngine\InspectioGraph\Metadata;
 
-final class Aggregate extends Vertex
+interface PolicyMetadata extends Metadata
 {
-    protected const TYPE = self::TYPE_AGGREGATE;
-
-    /**
-     * @var Metadata\AggregateMetadata|null
-     */
-    protected $metadataInstance;
-
-    public function metadataInstance(): ?Metadata\AggregateMetadata
-    {
-        return $this->metadataInstance;
-    }
+    public function streams(): array;
 }

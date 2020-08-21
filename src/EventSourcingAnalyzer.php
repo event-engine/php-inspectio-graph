@@ -40,10 +40,19 @@ final class EventSourcingAnalyzer
      */
     private $aggregateConnectionMap;
 
-    public function __construct(Graph\Graph $graph, callable $filterName)
-    {
+    /**
+     * @var callable
+     */
+    private $metadataFactory;
+
+    public function __construct(
+        Graph\Graph $graph,
+        callable $filterName,
+        ?callable $metadataFactory = null
+    ) {
         $this->graph = $graph;
         $this->filterName = $filterName;
+        $this->metadataFactory = $metadataFactory;
     }
 
     private function filterVerticesByType(string $type): Graph\Set\Vertices
@@ -83,7 +92,7 @@ final class EventSourcingAnalyzer
 
             /** @var Graph\Vertex $vertex */
             foreach ($this->filterVerticesByType(Vertex::TYPE_AGGREGATE) as $vertex) {
-                $aggregate = Vertex::fromGraphVertex($vertex, $this->filterName);
+                $aggregate = Vertex::fromGraphVertex($vertex, $this->filterName, $this->metadataFactory);
                 $name = $aggregate->name();
 
                 if (false === $this->aggregateConnectionMap->has($name)) {
@@ -131,7 +140,7 @@ final class EventSourcingAnalyzer
     {
         return \array_map(
             function (Graph\Vertex $vertex) {
-                return Vertex::fromGraphVertex($vertex, $this->filterName);
+                return Vertex::fromGraphVertex($vertex, $this->filterName, $this->metadataFactory);
             },
             $this->filterVerticesByType($type)->getVector()
         );

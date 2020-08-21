@@ -38,7 +38,8 @@
     "require": {
         "php": "^7.3 || ^8.0",
         "graphp/graph": "^0.9.1",
-        "graphp/graphml": "dev-feature/use-graphp-package"
+        "graphp/graphml": "dev-feature/use-graphp-package",
+        "ext-json": "*"
     },
     "require-dev": {
         "phpspec/prophecy-phpunit": "^2.0",
