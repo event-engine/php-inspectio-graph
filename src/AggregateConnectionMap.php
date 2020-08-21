@@ -108,4 +108,26 @@ final class AggregateConnectionMap implements Iterator, \Countable
             )
         );
     }
+
+    public function aggregateByCommand(Command $command): ?Aggregate
+    {
+        foreach ($this->map as $aggregateConnection) {
+            if ($aggregateConnection->commandMap()->has($command->name())) {
+                return $aggregateConnection->aggregate();
+            }
+        }
+
+        return null;
+    }
+
+    public function aggregateByEvent(Event $event): ?Aggregate
+    {
+        foreach ($this->map as $aggregateConnection) {
+            if ($aggregateConnection->eventMap()->has($event->name())) {
+                return $aggregateConnection->aggregate();
+            }
+        }
+
+        return null;
+    }
 }
