@@ -38,7 +38,7 @@ final class Event implements EventMetadata
         $self->public = $data['public'] ?? false;
 
         if (! empty($data['schema'])) {
-            $$self->schema = JsonMetadataFactory::encodeJson($data['schema']);
+            $self->schema = JsonMetadataFactory::encodeJson($data['schema']);
         }
 
         return $self;
