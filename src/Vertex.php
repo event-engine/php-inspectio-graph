@@ -52,7 +52,7 @@ abstract class Vertex implements VertexType
         Graph\Vertex $vertex,
         callable $filterName,
         ?callable $metadataFactory = null
-    ): Vertex {
+    ): VertexType {
         $label = (string) $vertex->getAttribute(VertexType::ATTRIBUTE_LABEL);
         $type = (string) $vertex->getAttribute(VertexType::ATTRIBUTE_TYPE);
 
@@ -70,7 +70,6 @@ abstract class Vertex implements VertexType
                 throw new RuntimeException(\sprintf('Given type "%s" is not supported', $vertex->getAttribute('type')));
         }
 
-        /** @var Vertex $self  */
         $self = new $class(
             $vertex->getId(),
             $type,

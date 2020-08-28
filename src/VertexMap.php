@@ -16,7 +16,7 @@ use Iterator;
 final class VertexMap implements Iterator, \Countable
 {
     /**
-     * @var Vertex[]
+     * @var VertexType[]
      */
     private $vertices = [];
 
@@ -25,12 +25,12 @@ final class VertexMap implements Iterator, \Countable
         return new self();
     }
 
-    public static function fromVertices(Vertex ...$vertices): VertexMap
+    public static function fromVertices(VertexType ...$vertices): VertexMap
     {
         return new self(...$vertices);
     }
 
-    private function __construct(Vertex ...$vertices)
+    private function __construct(VertexType ...$vertices)
     {
         foreach ($vertices as $vertex) {
             if (isset($this->vertices[$vertex->name()])
@@ -45,7 +45,7 @@ final class VertexMap implements Iterator, \Countable
         }
     }
 
-    public function with(Vertex $vertex): self
+    public function with(VertexType $vertex): self
     {
         $name = $vertex->name();
 
@@ -77,7 +77,7 @@ final class VertexMap implements Iterator, \Countable
         return isset($this->vertices[$name]);
     }
 
-    public function vertex(string $name): Vertex
+    public function vertex(string $name): VertexType
     {
         return $this->vertices[$name];
     }

@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace EventEngine\InspectioGraph\Metadata;
 
 use EventEngine\InspectioGraph\Exception\RuntimeException;
-use EventEngine\InspectioGraph\Vertex;
 use EventEngine\InspectioGraph\VertexType;
 use Fhaculty\Graph;
 
@@ -21,12 +20,12 @@ final class JsonMetadataFactory
     {
         $metadata = (string) $vertex->getAttribute(VertexType::ATTRIBUTE_METADATA);
 
-        switch ($vertex->getAttribute(Vertex::ATTRIBUTE_TYPE)) {
-            case Vertex::TYPE_COMMAND:
+        switch ($vertex->getAttribute(VertexType::ATTRIBUTE_TYPE)) {
+            case VertexType::TYPE_COMMAND:
                 return Command::fromJsonMetadata($metadata);
-            case Vertex::TYPE_AGGREGATE:
+            case VertexType::TYPE_AGGREGATE:
                 return Aggregate::fromJsonMetadata($metadata);
-            case Vertex::TYPE_EVENT:
+            case VertexType::TYPE_EVENT:
                 return Event::fromJsonMetadata($metadata);
             default:
                 throw new RuntimeException(\sprintf('Given type "%s" is not supported', $vertex->getAttribute('type')));

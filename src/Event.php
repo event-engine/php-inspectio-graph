@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph;
 
-final class Event extends Vertex
+final class Event extends Vertex implements EventType
 {
     protected const TYPE = self::TYPE_EVENT;
 

@@ -67,7 +67,7 @@ final class EventSourcingAnalyzer
     public function commandMap(): VertexMap
     {
         if (null === $this->commandMap) {
-            $this->commandMap = VertexMap::fromVertices(...$this->vertexMapByType(Vertex::TYPE_COMMAND));
+            $this->commandMap = VertexMap::fromVertices(...$this->vertexMapByType(VertexType::TYPE_COMMAND));
         }
 
         return $this->commandMap;
@@ -76,7 +76,7 @@ final class EventSourcingAnalyzer
     public function eventMap(): VertexMap
     {
         if (null === $this->eventMap) {
-            $this->eventMap = VertexMap::fromVertices(...$this->vertexMapByType(Vertex::TYPE_EVENT));
+            $this->eventMap = VertexMap::fromVertices(...$this->vertexMapByType(VertexType::TYPE_EVENT));
         }
 
         return $this->eventMap;
@@ -91,7 +91,7 @@ final class EventSourcingAnalyzer
             $eventMap = $this->eventMap();
 
             /** @var Graph\Vertex $vertex */
-            foreach ($this->filterVerticesByType(Vertex::TYPE_AGGREGATE) as $vertex) {
+            foreach ($this->filterVerticesByType(VertexType::TYPE_AGGREGATE) as $vertex) {
                 $aggregate = Vertex::fromGraphVertex($vertex, $this->filterName, $this->metadataFactory);
                 $name = $aggregate->name();
 
