@@ -15,7 +15,7 @@ use SplObjectStorage;
 final class AggregateConnection
 {
     /**
-     * @var Aggregate
+     * @var AggregateType
      **/
     private $aggregate;
 
@@ -34,14 +34,14 @@ final class AggregateConnection
      */
     private $commandToEventList = [];
 
-    public function __construct(Aggregate $aggregate)
+    public function __construct(AggregateType $aggregate)
     {
         $this->aggregate = $aggregate;
         $this->commandMap = VertexMap::emptyMap();
         $this->eventMap = VertexMap::emptyMap();
     }
 
-    public function withCommandEvents(Command $command, Event ...$events): self
+    public function withCommandEvents(CommandType $command, EventType ...$events): self
     {
         $self = clone $this;
 
@@ -60,7 +60,7 @@ final class AggregateConnection
         return $self;
     }
 
-    public function aggregate(): Aggregate
+    public function aggregate(): AggregateType
     {
         return $this->aggregate;
     }

@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph;
 
-final class Aggregate extends Vertex
+final class Aggregate extends Vertex implements AggregateType
 {
     protected const TYPE = self::TYPE_AGGREGATE;
 

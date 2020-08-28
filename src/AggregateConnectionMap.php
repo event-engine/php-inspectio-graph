@@ -109,7 +109,7 @@ final class AggregateConnectionMap implements Iterator, \Countable
         );
     }
 
-    public function aggregateByCommand(Command $command): ?Aggregate
+    public function aggregateByCommand(CommandType $command): ?AggregateType
     {
         foreach ($this->map as $aggregateConnection) {
             if ($aggregateConnection->commandMap()->has($command->name())) {
@@ -120,7 +120,7 @@ final class AggregateConnectionMap implements Iterator, \Countable
         return null;
     }
 
-    public function aggregateByEvent(Event $event): ?Aggregate
+    public function aggregateByEvent(EventType $event): ?AggregateType
     {
         foreach ($this->map as $aggregateConnection) {
             if ($aggregateConnection->eventMap()->has($event->name())) {

@@ -10,17 +10,7 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph;
 
-final class Command extends Vertex implements CommandType
+interface AggregateType extends VertexType
 {
-    protected const TYPE = self::TYPE_COMMAND;
-
-    /**
-     * @var Metadata\CommandMetadata|null
-     */
-    protected $metadataInstance;
-
-    public function metadataInstance(): ?Metadata\CommandMetadata
-    {
-        return $this->metadataInstance;
-    }
+    public function metadataInstance(): ?Metadata\AggregateMetadata;
 }
