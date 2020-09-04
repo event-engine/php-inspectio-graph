@@ -8,14 +8,16 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Metadata;
+namespace EventEngine\InspectioGraph\Cody\Metadata;
 
-final class Event implements EventMetadata
+use EventEngine\InspectioGraph\Metadata\CommandMetadata;
+
+final class Command implements CommandMetadata
 {
     /**
      * @var bool
      */
-    private $public = false;
+    private $newAggregate = false;
 
     /**
      * @var string|null
@@ -33,20 +35,20 @@ final class Event implements EventMetadata
         if (empty($json)) {
             return $self;
         }
-        $data = JsonMetadataFactory::decodeJson($json);
+        $data = NodeJsonMetadataFactory::decodeJson($json);
 
-        $self->public = $data['public'] ?? false;
+        $self->newAggregate = $data['newAggregate'] ?? false;
 
         if (! empty($data['schema'])) {
-            $self->schema = JsonMetadataFactory::encodeJson($data['schema']);
+            $self->schema = NodeJsonMetadataFactory::encodeJson($data['schema']);
         }
 
         return $self;
     }
 
-    public function public(): bool
+    public function newAggregate(): bool
     {
-        return $this->public;
+        return $this->newAggregate;
     }
 
     public function schema(): ?string

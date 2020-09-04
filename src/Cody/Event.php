@@ -8,7 +8,10 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph;
+namespace EventEngine\InspectioGraph\Cody;
+
+use EventEngine\InspectioGraph\EventType;
+use EventEngine\InspectioGraph\Metadata;
 
 final class Event extends Vertex implements EventType
 {

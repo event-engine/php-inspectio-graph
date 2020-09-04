@@ -8,18 +8,21 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph;
+namespace EventEngine\InspectioGraph\Cody;
 
-final class Aggregate extends Vertex implements AggregateType
+use EventEngine\InspectioGraph\CommandType;
+use EventEngine\InspectioGraph\Metadata;
+
+final class Command extends Vertex implements CommandType
 {
-    protected const TYPE = self::TYPE_AGGREGATE;
+    protected const TYPE = self::TYPE_COMMAND;
 
     /**
-     * @var Metadata\AggregateMetadata|null
+     * @var Metadata\CommandMetadata|null
      */
     protected $metadataInstance;
 
-    public function metadataInstance(): ?Metadata\AggregateMetadata
+    public function metadataInstance(): ?Metadata\CommandMetadata
     {
         return $this->metadataInstance;
     }

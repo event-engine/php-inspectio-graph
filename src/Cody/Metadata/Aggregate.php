@@ -8,14 +8,16 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Metadata;
+namespace EventEngine\InspectioGraph\Cody\Metadata;
 
-final class Policy implements PolicyMetadata
+use EventEngine\InspectioGraph\Metadata\AggregateMetadata;
+
+final class Aggregate implements AggregateMetadata
 {
     /**
-     * @var array
+     * @var string|null
      */
-    private $streams = [];
+    private $schema;
 
     private function __construct()
     {
@@ -25,17 +27,20 @@ final class Policy implements PolicyMetadata
     {
         $self = new self();
 
-        if (! empty($json)) {
-            $data = \json_decode($json, true, 512, \JSON_BIGINT_AS_STRING | \JSON_THROW_ON_ERROR);
+        if (empty($json)) {
+            return $self;
+        }
+        $data = NodeJsonMetadataFactory::decodeJson($json);
 
-            $self->streams = $data['streams'] ?? null;
+        if (! empty($data['schema'])) {
+            $self->schema = NodeJsonMetadataFactory::encodeJson($data['schema']);
         }
 
         return $self;
     }
 
-    public function streams(): array
+    public function schema(): ?string
     {
-        return $this->streams;
+        return $this->schema;
     }
 }

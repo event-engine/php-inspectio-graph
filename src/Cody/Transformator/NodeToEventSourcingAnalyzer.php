@@ -8,15 +8,15 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\GraphMl\Transformator;
+namespace EventEngine\InspectioGraph\Cody\Transformator;
 
-use EventEngine\InspectioGraph\GraphMl\EventSourcingAnalyzer;
-use EventEngine\InspectioGraph\GraphMl\Transformator\Exception\RuntimeException;
-use EventEngine\InspectioGraph\GraphMl\Validator;
-use Fhaculty\Graph;
+use EventEngine\InspectioGraph\Cody\Constraint\Exception\RuntimeException;
+use EventEngine\InspectioGraph\Cody\EventSourcingAnalyzer;
+use EventEngine\InspectioGraph\Cody\Node;
+use EventEngine\InspectioGraph\Cody\Validator;
 use OpenCodeModeling\CodeGenerator\Workflow;
 
-final class GraphToEventSourcingAnalyzer
+final class NodeToEventSourcingAnalyzer
 {
     /**
      * @var Validator
@@ -43,13 +43,13 @@ final class GraphToEventSourcingAnalyzer
         $this->metadataFactory = $metadataFactory;
     }
 
-    public function __invoke(Graph\Graph $graph): \EventEngine\InspectioGraph\EventSourcingAnalyzer
+    public function __invoke(Node $node): \EventEngine\InspectioGraph\EventSourcingAnalyzer
     {
-        if (false === $this->validator->isValid($graph)) {
+        if (false === $this->validator->isValid($node)) {
             throw new RuntimeException('Graph is invalid.');
         }
 
-        return new EventSourcingAnalyzer($graph, $this->filterName, $this->metadataFactory);
+        return new EventSourcingAnalyzer($node, $this->filterName, $this->metadataFactory);
     }
 
     public static function workflowComponentDescription(

@@ -32,7 +32,7 @@ final class WorkflowConfigFactory
     /**
      * Slot for the \EventEngine\InspectioGraph\EventSourcingAnalyzer instance
      */
-    public const SLOT_EVENT_SOURCING_ANALYZER = 'inspectio_graph-event_sourcing_analyzer';
+    public const SLOT_EVENT_SOURCING_ANALYZER = 'inspectio_graph-event_sourcing_analyzer_graph';
 
     /**
      * Configures a workflow to transform a GraphML XML string to an EventSourcingAnalyzer instance which is put to the

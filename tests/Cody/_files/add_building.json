@@ -1,0 +1,151 @@
+{
+    "node": {
+        "id": "o67B4pXhbDvuF2BnBsBy27",
+        "name": "Building",
+        "type": "aggregate",
+        "tags": [],
+        "layer": false,
+        "defaultLayer": false,
+        "parent": {
+            "id": "ci42SWefUq5RhLogkWzhQC",
+            "name": "Building",
+            "type": "boundedContext",
+            "tags": [],
+            "layer": false,
+            "defaultLayer": false,
+            "parent": {
+                "id": "7fe80d19-d317-4e9d-8296-96c598786d78",
+                "name": "Board",
+                "type": "layer",
+                "tags": [],
+                "layer": true,
+                "defaultLayer": true,
+                "parent": null,
+                "childrenList": [],
+                "sourcesList": [],
+                "targetsList": [],
+                "geometry": {
+                    "x": 0,
+                    "y": 0
+                },
+                "metadata": null
+            },
+            "childrenList": [],
+            "sourcesList": [],
+            "targetsList": [],
+            "geometry": {
+                "x": -688,
+                "y": -416
+            },
+            "metadata": null
+        },
+        "childrenList": [],
+        "sourcesList": [
+            {
+                "id": "i5hHo93xQP8cvhdTh25DHq",
+                "name": "Add Building",
+                "type": "command",
+                "tags": [],
+                "layer": false,
+                "defaultLayer": false,
+                "parent": {
+                    "id": "ci42SWefUq5RhLogkWzhQC",
+                    "name": "Building",
+                    "type": "boundedContext",
+                    "tags": [],
+                    "layer": false,
+                    "defaultLayer": false,
+                    "parent": {
+                        "id": "7fe80d19-d317-4e9d-8296-96c598786d78",
+                        "name": "Board",
+                        "type": "layer",
+                        "tags": [],
+                        "layer": true,
+                        "defaultLayer": true,
+                        "parent": null,
+                        "childrenList": [],
+                        "sourcesList": [],
+                        "targetsList": [],
+                        "geometry": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "metadata": null
+                    },
+                    "childrenList": [],
+                    "sourcesList": [],
+                    "targetsList": [],
+                    "geometry": {
+                        "x": -688,
+                        "y": -416
+                    },
+                    "metadata": null
+                },
+                "childrenList": [],
+                "sourcesList": [],
+                "targetsList": [],
+                "geometry": {
+                    "x": 264,
+                    "y": 224
+                },
+                "metadata": "{\n  \"newAggregate\": true,\n  \"schema\": {\n  \"type\": \"object\",\n  \"required\": [\n    \"buildingId\",\n    \"name\"\n  ],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"buildingId\": {\n      \"type\": \"string\",\n      \"pattern\": \"^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$\"\n    },\n    \"name\": {\n      \"type\": \"string\",\n      \"minLength\": 2\n    }\n  }\n  }\n}"
+            }
+        ],
+        "targetsList": [
+            {
+                "id": "ctuHbHKF1pwqQfa3VZ1nfz",
+                "name": "BuildingAdded",
+                "type": "event",
+                "tags": [],
+                "layer": false,
+                "defaultLayer": false,
+                "parent": {
+                    "id": "ci42SWefUq5RhLogkWzhQC",
+                    "name": "Building",
+                    "type": "boundedContext",
+                    "tags": [],
+                    "layer": false,
+                    "defaultLayer": false,
+                    "parent": {
+                        "id": "7fe80d19-d317-4e9d-8296-96c598786d78",
+                        "name": "Board",
+                        "type": "layer",
+                        "tags": [],
+                        "layer": true,
+                        "defaultLayer": true,
+                        "parent": null,
+                        "childrenList": [],
+                        "sourcesList": [],
+                        "targetsList": [],
+                        "geometry": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "metadata": null
+                    },
+                    "childrenList": [],
+                    "sourcesList": [],
+                    "targetsList": [],
+                    "geometry": {
+                        "x": -688,
+                        "y": -416
+                    },
+                    "metadata": null
+                },
+                "childrenList": [],
+                "sourcesList": [],
+                "targetsList": [],
+                "geometry": {
+                    "x": 728,
+                    "y": 224
+                },
+                "metadata": null
+            }
+        ],
+        "geometry": {
+            "x": 504,
+            "y": 224
+        },
+        "metadata": null
+    }
+}
