@@ -8,18 +8,19 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint\Exception;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint\Exception;
 
 use Fhaculty\Graph\Vertex;
 
-class ConnectionException extends RuntimeException
+class WrongAttributeTypeException extends RuntimeException
 {
-    public static function wrongConnection(Vertex $vertex, string ...$allowedTypes): ConnectionException
+    public static function wrongType(Vertex $vertex, string $attribute, string $type): WrongAttributeTypeException
     {
         return new self(
             \sprintf(
-                'No other connections than %s allowed for command "%s".',
-                \implode(', ', $allowedTypes), $vertex->getAttribute('label')
+                'Attribute "%s" has not the type "%s".',
+                $vertex->getAttribute($attribute),
+                $type
             )
         );
     }

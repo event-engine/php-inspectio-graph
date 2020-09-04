@@ -8,8 +8,10 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint\Exception;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint\Exception;
 
-class RuntimeException extends \EventEngine\InspectioGraph\Exception\RuntimeException implements ConstraintException
+use EventEngine\InspectioGraph\Exception\InspectioGraphException;
+
+interface ConstraintException extends InspectioGraphException
 {
 }

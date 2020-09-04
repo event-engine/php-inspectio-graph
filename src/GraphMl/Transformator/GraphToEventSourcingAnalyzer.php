@@ -8,11 +8,11 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Transformator;
+namespace EventEngine\InspectioGraph\GraphMl\Transformator;
 
-use EventEngine\InspectioGraph\EventSourcingAnalyzer;
-use EventEngine\InspectioGraph\Transformator\Exception\RuntimeException;
-use EventEngine\InspectioGraph\Validator;
+use EventEngine\InspectioGraph\GraphMl\EventSourcingAnalyzer;
+use EventEngine\InspectioGraph\GraphMl\Transformator\Exception\RuntimeException;
+use EventEngine\InspectioGraph\GraphMl\Validator;
 use Fhaculty\Graph;
 use OpenCodeModeling\CodeGenerator\Workflow;
 

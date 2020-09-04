@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint;
 
-use EventEngine\InspectioGraph\Constraint\Exception\WrongTypeException;
+use EventEngine\InspectioGraph\GraphMl\Constraint\Exception\WrongTypeException;
 use Fhaculty\Graph;
 
 final class AllowedVertexType implements Constraint

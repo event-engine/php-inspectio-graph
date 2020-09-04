@@ -8,12 +8,12 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint;
 
-use EventEngine\InspectioGraph\Constraint\Exception\WrongConnectionCountException;
+use EventEngine\InspectioGraph\GraphMl\Constraint\Exception\WrongConnectionCountException;
 use Fhaculty\Graph;
 
-final class AllowedConnectionToLessThan implements Constraint
+final class AllowedConnectionFromGreaterThan implements Constraint
 {
     /**
      * @var string
@@ -23,12 +23,12 @@ final class AllowedConnectionToLessThan implements Constraint
     /**
      * @var int
      **/
-    private $max;
+    private $min;
 
-    public function __construct(string $forType, int $max)
+    public function __construct(string $forType, int $min)
     {
         $this->forType = $forType;
-        $this->max = $max;
+        $this->min = $min;
     }
 
     public function __invoke(Graph\Vertex $vertex): void
@@ -42,13 +42,13 @@ final class AllowedConnectionToLessThan implements Constraint
         $vertices = $this->vertices($vertex);
         $verticesCount = $vertices->count();
 
-        if ($verticesCount > $this->max) {
-            throw WrongConnectionCountException::lessThan($vertex, $this->max);
+        if ($this->min > $verticesCount) {
+            throw WrongConnectionCountException::greaterThan($vertex, $this->min);
         }
     }
 
     protected function vertices(Graph\Vertex $vertex): Graph\Set\Vertices
     {
-        return $vertex->getVerticesEdgeFrom();
+        return $vertex->getVerticesEdgeTo();
     }
 }

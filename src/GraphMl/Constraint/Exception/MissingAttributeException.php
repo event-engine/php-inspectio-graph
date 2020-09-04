@@ -8,18 +8,20 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint\Exception;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint\Exception;
 
 use Fhaculty\Graph\Vertex;
 
-class WrongTypeException extends RuntimeException
+class MissingAttributeException extends RuntimeException
 {
-    public static function wrongType(Vertex $vertex, string ...$allowedTypes): WrongTypeException
+    public static function missingAttribute(Vertex $vertex, string $attribute): MissingAttributeException
     {
         return new self(
             \sprintf(
-                'Type "%s" is not allowed. Allowed types are: "%s".',
-                $vertex->getAttribute('type'), \implode(', ', $allowedTypes)
+                'Vertex of type "%s" with name "%s" has not mandatory attribute "%s".',
+                $vertex->getAttribute('label'),
+                $vertex->getAttribute('type'),
+                $attribute
             )
         );
     }

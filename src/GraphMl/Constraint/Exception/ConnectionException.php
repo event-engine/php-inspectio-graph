@@ -8,20 +8,18 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint\Exception;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint\Exception;
 
 use Fhaculty\Graph\Vertex;
 
-class MissingAttributeException extends RuntimeException
+class ConnectionException extends RuntimeException
 {
-    public static function missingAttribute(Vertex $vertex, string $attribute): MissingAttributeException
+    public static function wrongConnection(Vertex $vertex, string ...$allowedTypes): ConnectionException
     {
         return new self(
             \sprintf(
-                'Vertex of type "%s" with name "%s" has not mandatory attribute "%s".',
-                $vertex->getAttribute('label'),
-                $vertex->getAttribute('type'),
-                $attribute
+                'No other connections than %s allowed for command "%s".',
+                \implode(', ', $allowedTypes), $vertex->getAttribute('label')
             )
         );
     }

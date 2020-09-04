@@ -8,10 +8,8 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Transformator\Exception;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint\Exception;
 
-use EventEngine\InspectioGraph\Exception\InspectioGraphException;
-
-interface TransformatorException extends InspectioGraphException
+class RuntimeException extends \EventEngine\InspectioGraph\Exception\RuntimeException implements ConstraintException
 {
 }

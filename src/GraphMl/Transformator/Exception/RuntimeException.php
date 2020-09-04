@@ -8,11 +8,8 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint;
+namespace EventEngine\InspectioGraph\GraphMl\Transformator\Exception;
 
-use Fhaculty\Graph;
-
-interface Constraint
+class RuntimeException extends \EventEngine\InspectioGraph\Exception\RuntimeException implements TransformatorException
 {
-    public function __invoke(Graph\Vertex $vertex): void;
 }

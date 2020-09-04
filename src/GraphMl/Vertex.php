@@ -8,10 +8,11 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph;
+namespace EventEngine\InspectioGraph\GraphMl;
 
 use EventEngine\InspectioGraph\Exception\RuntimeException;
 use EventEngine\InspectioGraph\Metadata\Metadata;
+use EventEngine\InspectioGraph\VertexType;
 use Fhaculty\Graph;
 
 abstract class Vertex implements VertexType

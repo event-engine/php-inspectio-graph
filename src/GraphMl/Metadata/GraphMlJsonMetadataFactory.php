@@ -8,13 +8,14 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Metadata;
+namespace EventEngine\InspectioGraph\GraphMl\Metadata;
 
 use EventEngine\InspectioGraph\Exception\RuntimeException;
+use EventEngine\InspectioGraph\Metadata\Metadata;
 use EventEngine\InspectioGraph\VertexType;
 use Fhaculty\Graph;
 
-final class JsonMetadataFactory
+final class GraphMlJsonMetadataFactory
 {
     public function __invoke(Graph\Vertex $vertex, callable $filterName): Metadata
     {

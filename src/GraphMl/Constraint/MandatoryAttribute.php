@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint;
 
-use EventEngine\InspectioGraph\Constraint\Exception\MissingAttributeException;
+use EventEngine\InspectioGraph\GraphMl\Constraint\Exception\MissingAttributeException;
 use Fhaculty\Graph;
 
 final class MandatoryAttribute implements Constraint

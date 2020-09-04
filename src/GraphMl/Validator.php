@@ -8,9 +8,9 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph;
+namespace EventEngine\InspectioGraph\GraphMl;
 
-use EventEngine\InspectioGraph\Constraint\Exception\ConstraintException;
+use EventEngine\InspectioGraph\GraphMl\Constraint\Exception\ConstraintException;
 use Fhaculty\Graph\Graph as GraGraph;
 use Fhaculty\Graph\Vertex as GraVertex;
 

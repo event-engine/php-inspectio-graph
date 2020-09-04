@@ -8,16 +8,16 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\CodeGenerator;
+namespace EventEngine\InspectioGraph\GraphMl\CodeGenerator;
 
-use EventEngine\InspectioGraph\Constraint\AllowedConnectionFromGreaterThan;
-use EventEngine\InspectioGraph\Constraint\AllowedConnectionToLessThan;
-use EventEngine\InspectioGraph\Constraint\AllowedConnectionToType;
-use EventEngine\InspectioGraph\Constraint\AllowedVertexType;
-use EventEngine\InspectioGraph\Constraint\ConstraintChain;
-use EventEngine\InspectioGraph\Constraint\MandatoryAttribute;
-use EventEngine\InspectioGraph\Transformator;
-use EventEngine\InspectioGraph\Validator;
+use EventEngine\InspectioGraph\GraphMl\Constraint\AllowedConnectionFromGreaterThan;
+use EventEngine\InspectioGraph\GraphMl\Constraint\AllowedConnectionToLessThan;
+use EventEngine\InspectioGraph\GraphMl\Constraint\AllowedConnectionToType;
+use EventEngine\InspectioGraph\GraphMl\Constraint\AllowedVertexType;
+use EventEngine\InspectioGraph\GraphMl\Constraint\ConstraintChain;
+use EventEngine\InspectioGraph\GraphMl\Constraint\MandatoryAttribute;
+use EventEngine\InspectioGraph\GraphMl\Transformator;
+use EventEngine\InspectioGraph\GraphMl\Validator;
 use Graphp\GraphML\Loader;
 use OpenCodeModeling\CodeGenerator;
 use OpenCodeModeling\CodeGenerator\Config\Component;

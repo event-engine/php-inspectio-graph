@@ -8,10 +8,11 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint\Exception;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint;
 
-use EventEngine\InspectioGraph\Exception\InspectioGraphException;
+use Fhaculty\Graph;
 
-interface ConstraintException extends InspectioGraphException
+interface Constraint
 {
+    public function __invoke(Graph\Vertex $vertex): void;
 }

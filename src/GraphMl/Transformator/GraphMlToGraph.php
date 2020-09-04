@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Transformator;
+namespace EventEngine\InspectioGraph\GraphMl\Transformator;
 
 use Fhaculty\Graph\Graph;
 use Graphp\GraphML\Loader;

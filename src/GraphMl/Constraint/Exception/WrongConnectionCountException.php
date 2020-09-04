@@ -8,7 +8,7 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Constraint\Exception;
+namespace EventEngine\InspectioGraph\GraphMl\Constraint\Exception;
 
 use Fhaculty\Graph\Vertex;
 
