@@ -14,7 +14,7 @@ use EventEngine\InspectioGraph\Cody\Constraint\ConstraintChain;
 use EventEngine\InspectioGraph\Cody\Transformator;
 use EventEngine\InspectioGraph\Cody\Validator;
 use OpenCodeModeling\CodeGenerator;
-use OpenCodeModeling\CodeGenerator\Config\Component;
+use OpenCodeModeling\CodeGenerator\Config\WorkflowConfig;
 
 final class WorkflowConfigFactory
 {
@@ -40,13 +40,13 @@ final class WorkflowConfigFactory
      * @param string $inputSlotCodyJson Input slot name for Cody JSON string
      * @param callable $filterConstName
      * @param callable|null $metadataFactory
-     * @return Component
+     * @return WorkflowConfig
      */
     public static function codyJsonToEventSourcingAnalyzer(
         string $inputSlotCodyJson,
         callable $filterConstName,
         ?callable $metadataFactory = null
-    ): Component {
+    ): WorkflowConfig {
         $componentDescription = [
             // Configure model validation
             Transformator\CodyJsonToNode::workflowComponentDescription(
@@ -62,7 +62,7 @@ final class WorkflowConfigFactory
             ),
         ];
 
-        return new CodeGenerator\Config\ArrayConfig(...$componentDescription);
+        return new CodeGenerator\Config\Workflow(...$componentDescription);
     }
 
     public static function defaultValidator(): Validator

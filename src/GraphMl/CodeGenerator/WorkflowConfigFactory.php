@@ -20,7 +20,7 @@ use EventEngine\InspectioGraph\GraphMl\Transformator;
 use EventEngine\InspectioGraph\GraphMl\Validator;
 use Graphp\GraphML\Loader;
 use OpenCodeModeling\CodeGenerator;
-use OpenCodeModeling\CodeGenerator\Config\Component;
+use OpenCodeModeling\CodeGenerator\Config\WorkflowConfig;
 
 final class WorkflowConfigFactory
 {
@@ -41,13 +41,13 @@ final class WorkflowConfigFactory
      * @param string $inputSlotGraphMlXml Input slot name for GraphML XML document
      * @param callable $filterConstName
      * @param callable|null $metadataFactory
-     * @return Component
+     * @return WorkflowConfig
      */
     public static function graphMlXmlToEventSourcingAnalyzer(
         string $inputSlotGraphMlXml,
         callable $filterConstName,
         ?callable $metadataFactory = null
-    ): Component {
+    ): WorkflowConfig {
         $componentDescription = [
             // Configure model validation
             Transformator\GraphMlToGraph::workflowComponentDescription(
@@ -64,7 +64,7 @@ final class WorkflowConfigFactory
             ),
         ];
 
-        return new CodeGenerator\Config\ArrayConfig(...$componentDescription);
+        return new CodeGenerator\Config\Workflow(...$componentDescription);
     }
 
     public static function defaultValidator(): Validator
