@@ -15,6 +15,9 @@ interface VertexType
     public const TYPE_AGGREGATE = 'aggregate';
     public const TYPE_EVENT = 'event';
     public const TYPE_COMMAND = 'command';
+    public const TYPE_DOCUMENT = 'document';
+    public const TYPE_POLICY = 'policy';
+    public const TYPE_UI_API = 'ui-api';
 
     public const ATTRIBUTE_LABEL = 'label';
     public const ATTRIBUTE_TYPE = 'type';
