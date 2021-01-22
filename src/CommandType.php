@@ -12,5 +12,4 @@ namespace EventEngine\InspectioGraph;
 
 interface CommandType extends VertexType
 {
-    public function metadataInstance(): ?Metadata\CommandMetadata;
 }

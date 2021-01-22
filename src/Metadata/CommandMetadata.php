@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph\Metadata;
 
+/**
+ * @deprecated Use Has* interfaces instead
+ */
 interface CommandMetadata extends Metadata
 {
     public function newAggregate(): bool;

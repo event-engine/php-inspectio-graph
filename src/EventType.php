@@ -12,5 +12,4 @@ namespace EventEngine\InspectioGraph;
 
 interface EventType extends VertexType
 {
-    public function metadataInstance(): ?Metadata\EventMetadata;
 }

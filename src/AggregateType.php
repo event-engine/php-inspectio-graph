@@ -12,5 +12,4 @@ namespace EventEngine\InspectioGraph;
 
 interface AggregateType extends VertexType
 {
-    public function metadataInstance(): ?Metadata\AggregateMetadata;
 }

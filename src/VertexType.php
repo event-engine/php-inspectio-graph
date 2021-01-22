@@ -17,7 +17,7 @@ interface VertexType
     public const TYPE_COMMAND = 'command';
     public const TYPE_DOCUMENT = 'document';
     public const TYPE_POLICY = 'policy';
-    public const TYPE_UI= 'ui';
+    public const TYPE_UI = 'ui';
     public const TYPE_FEATURE = 'feature';
     public const TYPE_BOUNDED_CONTEXT = 'boundedContext';
 
@@ -47,4 +47,6 @@ interface VertexType
      * @return string
      */
     public function metadata(): string;
+
+    public function metadataInstance(): ?Metadata\Metadata;
 }

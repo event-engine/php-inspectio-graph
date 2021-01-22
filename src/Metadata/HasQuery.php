@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph\Metadata;
 
-/**
- * @deprecated Use Has* interfaces instead
- */
-interface AggregateMetadata extends Metadata
+interface HasQuery extends Metadata
 {
-    public function schema(): ?string;
+    /**
+     * @return mixed
+     */
+    public function query();
 }

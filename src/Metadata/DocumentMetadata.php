@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph\Metadata;
 
+/**
+ * @deprecated Use Has* interfaces instead
+ */
 interface DocumentMetadata extends Metadata
 {
     public function schema(): ?string;
