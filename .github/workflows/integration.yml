@@ -9,12 +9,9 @@ jobs:
         php-version:
           - "7.3"
           - "7.4"
+          - "8.0"
         os: [ubuntu-latest]
         experimental: [false]
-        include:
-          - php-version: "8.0"
-            os: ubuntu-latest
-            experimental: true
     runs-on: ${{ matrix.os }}
     name: PHP ${{ matrix.php-version }} Test on ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}

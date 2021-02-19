@@ -29,12 +29,6 @@
             "EventEngineTest\\InspectioGraph\\": "tests/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/sandrokeil/graphml"
-        }
-    ],
     "require": {
         "php": "^7.3 || ^8.0"
     },
@@ -43,7 +37,7 @@
         "phpstan/phpstan": "^0.12.33",
         "phpstan/phpstan-strict-rules": "^0.12.4",
         "phpunit/phpunit": "^9.2.6",
-        "prooph/php-cs-fixer-config": "^0.3",
+        "prooph/php-cs-fixer-config": "^0.4",
         "roave/security-advisories": "dev-master"
     },
     "minimum-stability": "dev",
