@@ -41,6 +41,28 @@ final class AggregateConnection
         $this->eventMap = VertexMap::emptyMap();
     }
 
+    public function withCommands(CommandType ...$commands): self
+    {
+        $self = clone $this;
+
+        foreach ($commands as $command) {
+            $self->commandMap = $self->commandMap->with($command);
+        }
+
+        return $self;
+    }
+
+    public function withEvents(EventType ...$events): self
+    {
+        $self = clone $this;
+
+        foreach ($events as $event) {
+            $self->eventMap = $self->eventMap->with($event);
+        }
+
+        return $self;
+    }
+
     public function withCommandEvents(CommandType $command, EventType ...$events): self
     {
         $self = clone $this;
