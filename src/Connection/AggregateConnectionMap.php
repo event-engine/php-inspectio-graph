@@ -8,8 +8,12 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph;
+namespace EventEngine\InspectioGraph\Connection;
 
+use EventEngine\InspectioGraph\AggregateType;
+use EventEngine\InspectioGraph\CommandType;
+use EventEngine\InspectioGraph\EventType;
+use EventEngine\InspectioGraph\VertexMap;
 use Iterator;
 
 final class AggregateConnectionMap implements Iterator, \Countable
@@ -17,7 +21,7 @@ final class AggregateConnectionMap implements Iterator, \Countable
     /**
      * @var AggregateConnection[]
      */
-    private $map;
+    private $map = [];
 
     public static function emptyMap(): AggregateConnectionMap
     {

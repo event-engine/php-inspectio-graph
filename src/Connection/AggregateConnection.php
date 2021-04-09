@@ -8,8 +8,12 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph;
+namespace EventEngine\InspectioGraph\Connection;
 
+use EventEngine\InspectioGraph\AggregateType;
+use EventEngine\InspectioGraph\CommandType;
+use EventEngine\InspectioGraph\EventType;
+use EventEngine\InspectioGraph\VertexMap;
 use SplObjectStorage;
 
 final class AggregateConnection
