@@ -36,34 +36,34 @@ final class PolicyConnectionMap implements Iterator, \Countable
     private function __construct(PolicyConnection ...$policyConnections)
     {
         foreach ($policyConnections as $policyConnection) {
-            $this->map[$policyConnection->policy()->name()] = $policyConnection;
+            $this->map[$policyConnection->policy()->id()] = $policyConnection;
         }
     }
 
-    public function with(string $name, PolicyConnection $policyConnection): self
+    public function with(string $id, PolicyConnection $policyConnection): self
     {
         $instance = clone $this;
-        $instance->map[$name] = $policyConnection;
+        $instance->map[$id] = $policyConnection;
 
         return $instance;
     }
 
-    public function without(string $name): self
+    public function without(string $id): self
     {
         $instance = clone $this;
-        unset($instance->map[$name]);
+        unset($instance->map[$id]);
 
         return $instance;
     }
 
-    public function has(string $name): bool
+    public function has(string $id): bool
     {
-        return isset($this->map[$name]);
+        return isset($this->map[$id]);
     }
 
-    public function policyConnection(string $name): PolicyConnection
+    public function policyConnection(string $id): PolicyConnection
     {
-        return $this->map[$name];
+        return $this->map[$id];
     }
 
     public function count(): int

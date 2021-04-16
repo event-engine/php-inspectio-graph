@@ -36,34 +36,34 @@ final class AggregateConnectionMap implements Iterator, \Countable
     private function __construct(AggregateConnection ...$aggregateConnections)
     {
         foreach ($aggregateConnections as $aggregateConnection) {
-            $this->map[$aggregateConnection->aggregate()->name()] = $aggregateConnection;
+            $this->map[$aggregateConnection->aggregate()->id()] = $aggregateConnection;
         }
     }
 
-    public function with(string $name, AggregateConnection $aggregateConnection): self
+    public function with(string $id, AggregateConnection $aggregateConnection): self
     {
         $instance = clone $this;
-        $instance->map[$name] = $aggregateConnection;
+        $instance->map[$id] = $aggregateConnection;
 
         return $instance;
     }
 
-    public function without(string $name): self
+    public function without(string $id): self
     {
         $instance = clone $this;
-        unset($instance->map[$name]);
+        unset($instance->map[$id]);
 
         return $instance;
     }
 
-    public function has(string $name): bool
+    public function has(string $id): bool
     {
-        return isset($this->map[$name]);
+        return isset($this->map[$id]);
     }
 
-    public function aggregateConnection(string $name): AggregateConnection
+    public function aggregateConnection(string $id): AggregateConnection
     {
-        return $this->map[$name];
+        return $this->map[$id];
     }
 
     public function count(): int

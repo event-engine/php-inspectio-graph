@@ -43,34 +43,34 @@ final class BoundedContextConnectionMap implements Iterator, \Countable
     private function __construct(BoundedContextConnection ...$boundedContextConnections)
     {
         foreach ($boundedContextConnections as $boundedContextConnection) {
-            $this->map[$boundedContextConnection->boundedContext()->name()] = $boundedContextConnection;
+            $this->map[$boundedContextConnection->boundedContext()->id()] = $boundedContextConnection;
         }
     }
 
-    public function with(string $name, BoundedContextConnection $boundedContextConnection): self
+    public function with(string $id, BoundedContextConnection $boundedContextConnection): self
     {
         $instance = clone $this;
-        $instance->map[$name] = $boundedContextConnection;
+        $instance->map[$id] = $boundedContextConnection;
 
         return $instance;
     }
 
-    public function without(string $name): self
+    public function without(string $id): self
     {
         $instance = clone $this;
-        unset($instance->map[$name]);
+        unset($instance->map[$id]);
 
         return $instance;
     }
 
-    public function has(string $name): bool
+    public function has(string $id): bool
     {
-        return isset($this->map[$name]);
+        return isset($this->map[$id]);
     }
 
-    public function boundedContextConnection(string $name): BoundedContextConnection
+    public function boundedContextConnection(string $id): BoundedContextConnection
     {
-        return $this->map[$name];
+        return $this->map[$id];
     }
 
     public function count(): int
@@ -178,7 +178,7 @@ final class BoundedContextConnectionMap implements Iterator, \Countable
     public function boundedContextByExternalSystem(ExternalSystemType $externalSystem): ?BoundedContextType
     {
         foreach ($this->map as $boundedContextConnection) {
-            if ($boundedContextConnection->externalSystemMap()->has($externalSystem->name())) {
+            if ($boundedContextConnection->externalSystemMap()->has($externalSystem->id())) {
                 return $boundedContextConnection->boundedContext();
             }
         }
@@ -189,7 +189,7 @@ final class BoundedContextConnectionMap implements Iterator, \Countable
     public function boundedContextByHotSpot(HotSpotType $hotSpot): ?BoundedContextType
     {
         foreach ($this->map as $boundedContextConnection) {
-            if ($boundedContextConnection->hotSpotMap()->has($hotSpot->name())) {
+            if ($boundedContextConnection->hotSpotMap()->has($hotSpot->id())) {
                 return $boundedContextConnection->boundedContext();
             }
         }
@@ -200,7 +200,7 @@ final class BoundedContextConnectionMap implements Iterator, \Countable
     public function boundedContextByUi(UiType $ui): ?BoundedContextType
     {
         foreach ($this->map as $boundedContextConnection) {
-            if ($boundedContextConnection->uiMap()->has($ui->name())) {
+            if ($boundedContextConnection->uiMap()->has($ui->id())) {
                 return $boundedContextConnection->boundedContext();
             }
         }
@@ -211,7 +211,7 @@ final class BoundedContextConnectionMap implements Iterator, \Countable
     public function boundedContextByFeature(FeatureType $feature): ?BoundedContextType
     {
         foreach ($this->map as $boundedContextConnection) {
-            if ($boundedContextConnection->featureMap()->has($feature->name())) {
+            if ($boundedContextConnection->featureMap()->has($feature->id())) {
                 return $boundedContextConnection->boundedContext();
             }
         }

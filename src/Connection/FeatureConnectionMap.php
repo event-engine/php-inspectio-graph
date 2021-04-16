@@ -42,34 +42,34 @@ final class FeatureConnectionMap implements Iterator, \Countable
     private function __construct(FeatureConnection ...$featureConnections)
     {
         foreach ($featureConnections as $featureConnection) {
-            $this->map[$featureConnection->feature()->name()] = $featureConnection;
+            $this->map[$featureConnection->feature()->id()] = $featureConnection;
         }
     }
 
-    public function with(string $name, FeatureConnection $featureConnection): self
+    public function with(string $id, FeatureConnection $featureConnection): self
     {
         $instance = clone $this;
-        $instance->map[$name] = $featureConnection;
+        $instance->map[$id] = $featureConnection;
 
         return $instance;
     }
 
-    public function without(string $name): self
+    public function without(string $id): self
     {
         $instance = clone $this;
-        unset($instance->map[$name]);
+        unset($instance->map[$id]);
 
         return $instance;
     }
 
-    public function has(string $name): bool
+    public function has(string $id): bool
     {
-        return isset($this->map[$name]);
+        return isset($this->map[$id]);
     }
 
-    public function featureConnection(string $name): FeatureConnection
+    public function featureConnection(string $id): FeatureConnection
     {
-        return $this->map[$name];
+        return $this->map[$id];
     }
 
     public function count(): int
