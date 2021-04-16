@@ -82,6 +82,14 @@ final class VertexMap implements Iterator, \Countable
         return $this->vertices[$name];
     }
 
+    /**
+     * @return VertexType[]
+     */
+    public function vertices(): array
+    {
+        return array_values($this->vertices);
+    }
+
     public function count(): int
     {
         return \count($this->vertices);
