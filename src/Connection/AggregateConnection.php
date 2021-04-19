@@ -12,6 +12,7 @@ namespace EventEngine\InspectioGraph\Connection;
 
 use EventEngine\InspectioGraph\AggregateType;
 use EventEngine\InspectioGraph\CommandType;
+use EventEngine\InspectioGraph\DocumentType;
 use EventEngine\InspectioGraph\EventType;
 use EventEngine\InspectioGraph\VertexMap;
 use SplObjectStorage;
@@ -34,6 +35,11 @@ final class AggregateConnection
     private $eventMap;
 
     /**
+     * @var VertexMap
+     */
+    private $documentMap;
+
+    /**
      * @var string[][]
      */
     private $commandToEventList = [];
@@ -43,6 +49,7 @@ final class AggregateConnection
         $this->aggregate = $aggregate;
         $this->commandMap = VertexMap::emptyMap();
         $this->eventMap = VertexMap::emptyMap();
+        $this->documentMap = VertexMap::emptyMap();
     }
 
     public function withCommands(CommandType ...$commands): self
@@ -62,6 +69,17 @@ final class AggregateConnection
 
         foreach ($events as $event) {
             $self->eventMap = $self->eventMap->with($event);
+        }
+
+        return $self;
+    }
+
+    public function withDocuments(DocumentType ...$documents): self
+    {
+        $self = clone $this;
+
+        foreach ($documents as $document) {
+            $self->documentMap = $self->documentMap->with($document);
         }
 
         return $self;
@@ -99,6 +117,11 @@ final class AggregateConnection
     public function eventMap(): VertexMap
     {
         return $this->eventMap;
+    }
+
+    public function documentMap(): VertexMap
+    {
+        return $this->documentMap;
     }
 
     /**

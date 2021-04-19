@@ -12,6 +12,7 @@ namespace EventEngine\InspectioGraph\Connection;
 
 use EventEngine\InspectioGraph\AggregateType;
 use EventEngine\InspectioGraph\CommandType;
+use EventEngine\InspectioGraph\DocumentType;
 use EventEngine\InspectioGraph\EventType;
 use EventEngine\InspectioGraph\VertexMap;
 use Iterator;
@@ -128,6 +129,17 @@ final class AggregateConnectionMap implements Iterator, \Countable
     {
         foreach ($this->map as $aggregateConnection) {
             if ($aggregateConnection->eventMap()->has($event->name())) {
+                return $aggregateConnection->aggregate();
+            }
+        }
+
+        return null;
+    }
+
+    public function aggregateByDocument(DocumentType $document): ?AggregateType
+    {
+        foreach ($this->map as $aggregateConnection) {
+            if ($aggregateConnection->documentMap()->has($document->name())) {
                 return $aggregateConnection->aggregate();
             }
         }
