@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace EventEngine\InspectioGraph\Connection;
 
 use EventEngine\InspectioGraph\CommandType;
-use EventEngine\InspectioGraph\DocumentType;
 use EventEngine\InspectioGraph\EventType;
 use EventEngine\InspectioGraph\ExternalSystemType;
 use EventEngine\InspectioGraph\PolicyType;
@@ -38,11 +37,6 @@ final class PolicyConnection
     /**
      * @var VertexMap
      */
-    private $documentMap;
-
-    /**
-     * @var VertexMap
-     */
     private $externalSystemMap;
 
     /**
@@ -55,22 +49,11 @@ final class PolicyConnection
      */
     private $eventToExternalSystemList = [];
 
-    /**
-     * @var array<string, string>
-     */
-    private $eventToEventList = [];
-
-    /**
-     * @var array<string, string>
-     */
-    private $eventToDocumentList = [];
-
     public function __construct(PolicyType $policy)
     {
         $this->policy = $policy;
         $this->commandMap = VertexMap::emptyMap();
         $this->eventMap = VertexMap::emptyMap();
-        $this->documentMap = VertexMap::emptyMap();
         $this->externalSystemMap = VertexMap::emptyMap();
     }
 
@@ -91,17 +74,6 @@ final class PolicyConnection
 
         foreach ($events as $event) {
             $self->eventMap = $self->eventMap->with($event);
-        }
-
-        return $self;
-    }
-
-    public function withDocuments(DocumentType ...$documents): self
-    {
-        $self = clone $this;
-
-        foreach ($documents as $document) {
-            $self->documentMap = $self->documentMap->with($document);
         }
 
         return $self;
@@ -129,13 +101,13 @@ final class PolicyConnection
         return $self;
     }
 
-    public function withEventDocument(EventType $event, DocumentType $document): self
+    public function withEventExternalSystem(EventType $event, ExternalSystemType $externalSystem): self
     {
         $self = clone $this;
 
         $self->eventMap = $self->eventMap->with($event);
-        $self->documentMap = $self->documentMap->with($document);
-        $self->eventToCommandList[$event->name()] = $document->name();
+        $self->externalSystemMap = $self->externalSystemMap->with($externalSystem);
+        $self->eventToExternalSystemList[$event->name()] = $externalSystem->name();
 
         return $self;
     }
@@ -155,11 +127,6 @@ final class PolicyConnection
         return $this->eventMap;
     }
 
-    public function documentMap(): VertexMap
-    {
-        return $this->documentMap;
-    }
-
     public function externalSystemMap(): VertexMap
     {
         return $this->externalSystemMap;
@@ -170,7 +137,7 @@ final class PolicyConnection
      *
      * @return SplObjectStorage
      */
-    public function eventsToCommandsMap(): SplObjectStorage
+    public function eventsToCommandMap(): SplObjectStorage
     {
         $map = new SplObjectStorage();
 
@@ -182,38 +149,18 @@ final class PolicyConnection
     }
 
     /**
-     * Event vertex is the key and the document vertex is the value.
+     * Event vertex is the key and the external system vertex is the value.
      *
      * @return SplObjectStorage
      */
-    public function eventsToDocumentsMap(): SplObjectStorage
+    public function eventsToExternalSystemMap(): SplObjectStorage
     {
         $map = new SplObjectStorage();
 
-        foreach ($this->eventToDocumentList as $eventName => $documentName) {
-            $map[$this->eventMap->vertex($eventName)] = $this->documentMap->vertex($documentName);
+        foreach ($this->eventToExternalSystemList as $eventName => $commandName) {
+            $map[$this->eventMap->vertex($eventName)] = $this->commandMap->vertex($commandName);
         }
 
         return $map;
-    }
-
-    /**
-     * Indicates if this policy acts as a process manager which triggers commands depending on events.
-     *
-     * @return bool
-     */
-    public function isProcessManager(): bool
-    {
-        return ! empty($this->eventToCommandList);
-    }
-
-    /**
-     * Indicates if this policy acts as a read model projection which updates a document depending on events.
-     *
-     * @return bool
-     */
-    public function isReadModel(): bool
-    {
-        return ! empty($this->eventToDocumentList);
     }
 }
