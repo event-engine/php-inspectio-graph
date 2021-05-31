@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph\Connection;
 
+use Countable;
 use EventEngine\InspectioGraph\AggregateType;
 use EventEngine\InspectioGraph\CommandType;
 use EventEngine\InspectioGraph\DocumentType;
@@ -17,7 +18,7 @@ use EventEngine\InspectioGraph\EventType;
 use EventEngine\InspectioGraph\VertexMap;
 use Iterator;
 
-final class AggregateConnectionMap implements Iterator, \Countable
+final class AggregateConnectionMap implements Iterator, Countable
 {
     /**
      * @var AggregateConnection[]
@@ -44,7 +45,23 @@ final class AggregateConnectionMap implements Iterator, \Countable
     public function with(string $id, AggregateConnection $aggregateConnection): self
     {
         $instance = clone $this;
-        $instance->map[$id] = $aggregateConnection;
+
+        if (isset($instance->map[$id])) {
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withCommands(...$aggregateConnection->commandMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withEvents(...$aggregateConnection->eventMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withDocuments(...$aggregateConnection->documentMap()->vertices());
+
+            $commandsToEventsMap = $aggregateConnection->commandsToEventsMap();
+
+            foreach ($commandsToEventsMap as $command) {
+                $instance->map[$id] = $instance->map[$id]->withCommandEvents($command, ...$commandsToEventsMap[$command]);
+            }
+        } else {
+            $instance->map[$id] = $aggregateConnection;
+        }
 
         return $instance;
     }
