@@ -96,7 +96,9 @@ final class AggregateConnection
                 $self->commandToEventList[$command->name()] = [];
             }
 
-            $self->commandToEventList[$command->name()][] = $event->name();
+            if (! \in_array($event->name(), $self->commandToEventList[$command->name()], true)) {
+                $self->commandToEventList[$command->name()][] = $event->name();
+            }
         }
 
         $self->commandMap = $self->commandMap->with($command);
