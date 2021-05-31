@@ -49,7 +49,27 @@ final class FeatureConnectionMap implements Iterator, \Countable
     public function with(string $id, FeatureConnection $featureConnection): self
     {
         $instance = clone $this;
-        $instance->map[$id] = $featureConnection;
+
+        if (isset($instance->map[$id])) {
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withCommands(...$featureConnection->commandMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withAggregates(...$featureConnection->aggregateMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withEvents(...$featureConnection->eventMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withDocuments(...$featureConnection->documentMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withPolicies(...$featureConnection->policyMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withExternalSystems(...$featureConnection->externalSystemMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withUis(...$featureConnection->uiMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $instance->map[$id] = $instance->map[$id]->withHotSpots(...$featureConnection->hotSpotMap()->vertices());
+        } else {
+            $instance->map[$id] = $featureConnection;
+        }
 
         return $instance;
     }
