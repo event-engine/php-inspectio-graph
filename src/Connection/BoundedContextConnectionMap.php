@@ -52,6 +52,8 @@ final class BoundedContextConnectionMap implements Iterator, \Countable
         $instance = clone $this;
         $instance->map[$id] = $boundedContextConnection;
 
+        \reset($instance->map);
+
         return $instance;
     }
 

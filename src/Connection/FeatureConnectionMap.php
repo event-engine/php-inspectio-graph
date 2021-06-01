@@ -70,6 +70,7 @@ final class FeatureConnectionMap implements Iterator, \Countable
         } else {
             $instance->map[$id] = $featureConnection;
         }
+        \reset($instance->map);
 
         return $instance;
     }

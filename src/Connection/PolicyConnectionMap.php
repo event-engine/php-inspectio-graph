@@ -45,6 +45,8 @@ final class PolicyConnectionMap implements Iterator, \Countable
         $instance = clone $this;
         $instance->map[$id] = $policyConnection;
 
+        \reset($instance->map);
+
         return $instance;
     }
 

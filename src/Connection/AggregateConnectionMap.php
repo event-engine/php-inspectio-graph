@@ -62,6 +62,7 @@ final class AggregateConnectionMap implements Iterator, Countable
         } else {
             $instance->map[$id] = $aggregateConnection;
         }
+        \reset($instance->map);
 
         return $instance;
     }

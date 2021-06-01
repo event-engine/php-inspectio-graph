@@ -62,6 +62,7 @@ final class VertexMap implements Iterator, \Countable
 
             $instance->vertices[$name] = $vertex;
         }
+        \reset($instance->vertices);
 
         return $instance;
     }
