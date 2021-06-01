@@ -92,9 +92,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($commands as $command) {
-            $self->commandMap = $self->commandMap->with($command);
-        }
+        $self->commandMap = $self->commandMap->with(...$commands);
 
         return $self;
     }
@@ -103,9 +101,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($events as $event) {
-            $self->eventMap = $self->eventMap->with($event);
-        }
+        $self->eventMap = $self->eventMap->with(...$events);
 
         return $self;
     }
@@ -114,9 +110,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($aggregates as $aggregate) {
-            $self->aggregateMap = $self->aggregateMap->with($aggregate);
-        }
+        $self->aggregateMap = $self->aggregateMap->with(...$aggregates);
 
         return $self;
     }
@@ -125,9 +119,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($documents as $document) {
-            $self->documentMap = $self->documentMap->with($document);
-        }
+        $self->documentMap = $self->documentMap->with(...$documents);
 
         return $self;
     }
@@ -136,9 +128,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($policies as $policy) {
-            $self->policyMap = $self->policyMap->with($policy);
-        }
+        $self->policyMap = $self->policyMap->with(...$policies);
 
         return $self;
     }
@@ -147,9 +137,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($uis as $ui) {
-            $self->uiMap = $self->policyMap->with($ui);
-        }
+        $self->uiMap = $self->policyMap->with(...$uis);
 
         return $self;
     }
@@ -158,9 +146,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($externalSystems as $externalSystem) {
-            $self->externalSystemMap = $self->externalSystemMap->with($externalSystem);
-        }
+        $self->externalSystemMap = $self->externalSystemMap->with(...$externalSystems);
 
         return $self;
     }
@@ -169,9 +155,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($hotSpots as $hotSpot) {
-            $self->hotSpotMap = $self->hotSpotMap->with($hotSpot);
-        }
+        $self->hotSpotMap = $self->hotSpotMap->with(...$hotSpots);
 
         return $self;
     }
@@ -180,9 +164,7 @@ final class BoundedContextConnection
     {
         $self = clone $this;
 
-        foreach ($features as $feature) {
-            $self->featureMap = $self->featureMap->with($feature);
-        }
+        $self->featureMap = $self->featureMap->with(...$features);
 
         return $self;
     }

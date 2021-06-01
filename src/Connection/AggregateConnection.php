@@ -56,9 +56,7 @@ final class AggregateConnection
     {
         $self = clone $this;
 
-        foreach ($commands as $command) {
-            $self->commandMap = $self->commandMap->with($command);
-        }
+        $self->commandMap = $self->commandMap->with(...$commands);
 
         return $self;
     }
@@ -67,9 +65,7 @@ final class AggregateConnection
     {
         $self = clone $this;
 
-        foreach ($events as $event) {
-            $self->eventMap = $self->eventMap->with($event);
-        }
+        $self->eventMap = $self->eventMap->with(...$events);
 
         return $self;
     }
@@ -78,9 +74,7 @@ final class AggregateConnection
     {
         $self = clone $this;
 
-        foreach ($documents as $document) {
-            $self->documentMap = $self->documentMap->with($document);
-        }
+        $self->documentMap = $self->documentMap->with(...$documents);
 
         return $self;
     }
