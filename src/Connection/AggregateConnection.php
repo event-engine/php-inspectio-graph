@@ -14,10 +14,11 @@ use EventEngine\InspectioGraph\AggregateType;
 use EventEngine\InspectioGraph\CommandType;
 use EventEngine\InspectioGraph\DocumentType;
 use EventEngine\InspectioGraph\EventType;
+use EventEngine\InspectioGraph\Exception\ConnectionMergeNotPossible;
 use EventEngine\InspectioGraph\VertexMap;
 use SplObjectStorage;
 
-final class AggregateConnection
+final class AggregateConnection implements Connection
 {
     /**
      * @var AggregateType
@@ -100,6 +101,34 @@ final class AggregateConnection
         return $self;
     }
 
+    public function merge(Connection $connection, bool $onlyConnectionVertex): self
+    {
+        if (! $connection instanceof self) {
+            throw ConnectionMergeNotPossible::notPossibleFor($this, $connection);
+        }
+
+        $self = clone $this;
+
+        $self->aggregate = $connection->aggregate;
+
+        if ($onlyConnectionVertex === false) {
+            /** @phpstan-ignore-next-line */
+            $self = $self->withCommands(...$connection->commandMap->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withEvents(...$connection->eventMap->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withDocuments(...$connection->documentMap->vertices());
+
+            $commandsToEventsMap = $connection->commandsToEventsMap();
+
+            foreach ($commandsToEventsMap as $command) {
+                $self = $self->withCommandEvents($command, ...$commandsToEventsMap[$command]);
+            }
+        }
+
+        return $self;
+    }
+
     public function aggregate(): AggregateType
     {
         return $this->aggregate;
@@ -139,5 +168,15 @@ final class AggregateConnection
         }
 
         return $map;
+    }
+
+    public function id(): string
+    {
+        return $this->aggregate->id();
+    }
+
+    public function name(): string
+    {
+        return $this->aggregate->name();
     }
 }

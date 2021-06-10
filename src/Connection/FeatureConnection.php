@@ -14,6 +14,7 @@ use EventEngine\InspectioGraph\AggregateType;
 use EventEngine\InspectioGraph\CommandType;
 use EventEngine\InspectioGraph\DocumentType;
 use EventEngine\InspectioGraph\EventType;
+use EventEngine\InspectioGraph\Exception\ConnectionMergeNotPossible;
 use EventEngine\InspectioGraph\ExternalSystemType;
 use EventEngine\InspectioGraph\FeatureType;
 use EventEngine\InspectioGraph\HotSpotType;
@@ -21,7 +22,7 @@ use EventEngine\InspectioGraph\PolicyType;
 use EventEngine\InspectioGraph\UiType;
 use EventEngine\InspectioGraph\VertexMap;
 
-final class FeatureConnection
+final class FeatureConnection implements Connection
 {
     /**
      * @var FeatureType
@@ -130,7 +131,7 @@ final class FeatureConnection
     {
         $self = clone $this;
 
-        $self->uiMap = $self->policyMap->with(...$uis);
+        $self->uiMap = $self->uiMap->with(...$uis);
 
         return $self;
     }
@@ -149,6 +150,37 @@ final class FeatureConnection
         $self = clone $this;
 
         $self->hotSpotMap = $self->hotSpotMap->with(...$hotSpots);
+
+        return $self;
+    }
+
+    public function merge(Connection $connection, bool $onlyConnectionVertex): self
+    {
+        if (! $connection instanceof self) {
+            throw ConnectionMergeNotPossible::notPossibleFor($this, $connection);
+        }
+
+        $self = clone $this;
+        $self->feature = $connection->feature;
+
+        if ($onlyConnectionVertex === false) {
+            /** @phpstan-ignore-next-line */
+            $self = $self->withCommands(...$connection->commandMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withAggregates(...$connection->aggregateMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withEvents(...$connection->eventMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withDocuments(...$connection->documentMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withPolicies(...$connection->policyMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withExternalSystems(...$connection->externalSystemMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withUis(...$connection->uiMap()->vertices());
+            /** @phpstan-ignore-next-line */
+            $self = $self->withHotSpots(...$connection->hotSpotMap()->vertices());
+        }
 
         return $self;
     }
@@ -196,5 +228,15 @@ final class FeatureConnection
     public function hotSpotMap(): VertexMap
     {
         return $this->hotSpotMap;
+    }
+
+    public function id(): string
+    {
+        return $this->feature->id();
+    }
+
+    public function name(): string
+    {
+        return $this->feature->name();
     }
 }

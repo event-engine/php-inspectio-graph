@@ -20,15 +20,12 @@ use EventEngine\InspectioGraph\HotSpotType;
 use EventEngine\InspectioGraph\PolicyType;
 use EventEngine\InspectioGraph\UiType;
 use EventEngine\InspectioGraph\VertexMap;
-use Iterator;
 
-final class FeatureConnectionMap implements Iterator, \Countable
+/**
+ * @property FeatureConnection[] $map
+ */
+final class FeatureConnectionMap extends ConnectionMap
 {
-    /**
-     * @var FeatureConnection[]
-     */
-    private $map = [];
-
     public static function emptyMap(): FeatureConnectionMap
     {
         return new self();
@@ -37,93 +34,6 @@ final class FeatureConnectionMap implements Iterator, \Countable
     public static function fromFeatureConnections(FeatureConnection ...$featureConnections): FeatureConnectionMap
     {
         return new self(...$featureConnections);
-    }
-
-    private function __construct(FeatureConnection ...$featureConnections)
-    {
-        foreach ($featureConnections as $featureConnection) {
-            $this->map[$featureConnection->feature()->id()] = $featureConnection;
-        }
-    }
-
-    public function with(string $id, FeatureConnection $featureConnection): self
-    {
-        $instance = clone $this;
-
-        if (isset($instance->map[$id])) {
-            /** @phpstan-ignore-next-line */
-            $instance->map[$id] = $instance->map[$id]->withCommands(...$featureConnection->commandMap()->vertices());
-            /** @phpstan-ignore-next-line */
-            $instance->map[$id] = $instance->map[$id]->withAggregates(...$featureConnection->aggregateMap()->vertices());
-            /** @phpstan-ignore-next-line */
-            $instance->map[$id] = $instance->map[$id]->withEvents(...$featureConnection->eventMap()->vertices());
-            /** @phpstan-ignore-next-line */
-            $instance->map[$id] = $instance->map[$id]->withDocuments(...$featureConnection->documentMap()->vertices());
-            /** @phpstan-ignore-next-line */
-            $instance->map[$id] = $instance->map[$id]->withPolicies(...$featureConnection->policyMap()->vertices());
-            /** @phpstan-ignore-next-line */
-            $instance->map[$id] = $instance->map[$id]->withExternalSystems(...$featureConnection->externalSystemMap()->vertices());
-            /** @phpstan-ignore-next-line */
-            $instance->map[$id] = $instance->map[$id]->withUis(...$featureConnection->uiMap()->vertices());
-            /** @phpstan-ignore-next-line */
-            $instance->map[$id] = $instance->map[$id]->withHotSpots(...$featureConnection->hotSpotMap()->vertices());
-        } else {
-            $instance->map[$id] = $featureConnection;
-        }
-        \reset($instance->map);
-
-        return $instance;
-    }
-
-    public function without(string $id): self
-    {
-        $instance = clone $this;
-        unset($instance->map[$id]);
-
-        return $instance;
-    }
-
-    public function has(string $id): bool
-    {
-        return isset($this->map[$id]);
-    }
-
-    public function featureConnection(string $id): FeatureConnection
-    {
-        return $this->map[$id];
-    }
-
-    public function count(): int
-    {
-        return \count($this->map);
-    }
-
-    public function rewind(): void
-    {
-        \reset($this->map);
-    }
-
-    public function key(): string
-    {
-        return \key($this->map);
-    }
-
-    public function next(): void
-    {
-        \next($this->map);
-    }
-
-    public function valid(): bool
-    {
-        return false !== \current($this->map);
-    }
-
-    /**
-     * @return FeatureConnection
-     */
-    public function current()
-    {
-        return \current($this->map);
     }
 
     public function featureVertexMap(): VertexMap
