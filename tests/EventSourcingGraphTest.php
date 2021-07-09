@@ -22,6 +22,7 @@ final class EventSourcingGraphTest extends TestCase
     private const ID_BUILDING = '7910f5d7-9f33-4b9f-84c5-0fcc7c4d89d9';
     private const ID_BUILDING_ADDED = '30b10773-9453-4201-8e85-17c50468f6df';
     private const ID_FEATURE = '2c5b0bfa-32d5-4872-a7e6-ee00332c63cd';
+    private const ID_DOCUMENT = 'c792635a-6ce4-4ad8-962a-1da0c22e0de4';
 
     /**
      * @test
@@ -85,6 +86,25 @@ final class EventSourcingGraphTest extends TestCase
         $this->assertNotNull($buildingAddedConnection->parent());
 
         $this->assertSame($aggregateAddBuildingConnection->identity(), $buildingAddedConnection->from()->current());
+
+        $document = $this->documentBuilding();
+
+        $map = $graph->createConnection($buildingAdded, $document, $map);
+        $map = $graph->createParentConnection($document, $feature, $map);
+
+        $found = $map->findInGraph(
+            self::ID_ADD_BUILDING,
+            fn (VertexType $vertex) => $vertex->type() === VertexType::TYPE_DOCUMENT,
+            VertexConnectionMap::WALK_FORWARD
+        );
+        $this->assertSame($document, $found->identity());
+
+        $found = $map->findInGraph(
+            self::ID_DOCUMENT,
+            fn (VertexType $vertex) => $vertex->type() === VertexType::TYPE_COMMAND,
+            VertexConnectionMap::WALK_BACKWARD
+        );
+        $this->assertSame($addBuilding, $found->identity());
     }
 
     private function addBuilding(): VertexType
@@ -117,6 +137,17 @@ final class EventSourcingGraphTest extends TestCase
             $id,
             'BuildingAdded',
             VertexType::TYPE_EVENT,
+            $this->filterName(),
+            ''
+        );
+    }
+
+    private function documentBuilding(): VertexType
+    {
+        return Vertex::fromScalar(
+            'c792635a-6ce4-4ad8-962a-1da0c22e0de4',
+            'BuildingAdded',
+            VertexType::TYPE_DOCUMENT,
             $this->filterName(),
             ''
         );

@@ -11,10 +11,14 @@ declare(strict_types=1);
 namespace EventEngine\InspectioGraph;
 
 use Countable;
+use EventEngine\InspectioGraph\Exception\RuntimeException;
 use Iterator;
 
 final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexConnection
 {
+    public const WALK_FORWARD = 'to';
+    public const WALK_BACKWARD = 'from';
+
     /**
      * @var VertexConnection[]
      */
@@ -105,6 +109,48 @@ final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexC
         \reset($instance->connections);
 
         return $instance;
+    }
+
+    /**
+     * Search for a specific vertex in graph
+     *
+     * @param string $startId ID of the start vertex
+     * @param callable $callback Callback which gets the VertexType provided to check if this is the vertex you looking for
+     * @param string $direction Move forward or backward from the start vertex, use a WALK_* constant
+     * @param int $maxSteps How much steps do you want to go through the graph
+     * @return VertexConnection|null
+     */
+    public function findInGraph(string $startId, callable $callback, string $direction, int $maxSteps = 5): ?VertexConnection
+    {
+        if ($direction !== self::WALK_FORWARD
+            && $direction !== self::WALK_BACKWARD
+        ) {
+            throw new RuntimeException(
+                \sprintf('The provided direction "%s" is wrong. Please use the constants %s::WALK_*', $direction, self::class)
+            );
+        }
+
+        if ($maxSteps === 0) {
+            return null;
+        }
+
+        if (! isset($this->connections[$startId])) {
+            throw new RuntimeException(
+                \sprintf('The id "%s" was not found in graph.', $startId)
+            );
+        }
+        $connection = $this->connections[$startId];
+
+        foreach ($connection->$direction() as $toConnection) {
+            if ($callback($toConnection) === true) {
+                return $this->connections[$toConnection->id()];
+            }
+            if ($found = $this->findInGraph($toConnection->id(), $callback, $direction, --$maxSteps)) {
+                return $found;
+            }
+        }
+
+        return null;
     }
 
     public function has(string $id): bool
