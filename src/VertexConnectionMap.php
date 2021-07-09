@@ -46,9 +46,9 @@ final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexC
 
             if (isset($instance->connections[$id])) {
                 $instance->connections[$id] = $instance->connections[$id]
-                    ->withFrom(...$vertex->from()->vertexIdentities())
-                    ->withTo(...$vertex->to()->vertexIdentities())
-                    ->withChildren(...$vertex->children()->vertexIdentities());
+                    ->withFrom(...$vertex->from()->vertices())
+                    ->withTo(...$vertex->to()->vertices())
+                    ->withChildren(...$vertex->children()->vertices());
 
                 if ($parent = $vertex->parent()) {
                     $instance->connections[$id] = $instance->connections[$id]->withParent($parent);
@@ -65,7 +65,7 @@ final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexC
     public function without(string $id): self
     {
         $instance = clone $this;
-        // TODO cycle through all connections and remove identity of from / to map
+        // TODO cycle through all connections and remove identity of from / to / parent / child map
         unset($instance->connections[$id]);
 
         return $instance;
@@ -77,6 +77,30 @@ final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexC
         $instance->connections = \array_filter(
             $instance->connections,
             static fn (VertexConnection $identity) => $identity->identity()->type() === $type
+        );
+        \reset($instance->connections);
+
+        return $instance;
+    }
+
+    public function filterByName(string $name): self
+    {
+        $instance = clone $this;
+        $instance->connections = \array_filter(
+            $instance->connections,
+            static fn (VertexConnection $identity) => $identity->identity()->name() === $name
+        );
+        \reset($instance->connections);
+
+        return $instance;
+    }
+
+    public function filter(callable $callback): self
+    {
+        $instance = clone $this;
+        $instance->connections = \array_filter(
+            $instance->connections,
+            $callback
         );
         \reset($instance->connections);
 
