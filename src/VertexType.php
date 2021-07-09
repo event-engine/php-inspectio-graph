@@ -42,9 +42,16 @@ interface VertexType
     public function name(): string;
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function metadata(): string;
+    public function metadata(): ?string;
 
     public function metadataInstance(): ?Metadata\Metadata;
+
+    /**
+     * Use it only to sync latest data from event map
+     *
+     * @param VertexType $vertex
+     */
+    public function merge(VertexType $vertex): void;
 }

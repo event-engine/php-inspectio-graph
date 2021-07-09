@@ -8,9 +8,11 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Connection;
+namespace EventEngine\InspectioGraph;
 
-interface AggregateConnectionAnalyzer
+interface CanAccessVertexConnection
 {
-    public function aggregateConnectionMap(): AggregateConnectionMap;
+    public function has(string $id): bool;
+
+    public function connection(string $id): VertexConnection;
 }

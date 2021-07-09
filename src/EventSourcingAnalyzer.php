@@ -10,25 +10,25 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph;
 
-interface EventSourcingAnalyzer
+interface EventSourcingAnalyzer extends CanAccessVertexConnection
 {
-    public function commandMap(): VertexMap;
+    public function commandMap(): VertexConnectionMap;
 
-    public function eventMap(): VertexMap;
+    public function eventMap(): VertexConnectionMap;
 
-    public function aggregateMap(): VertexMap;
+    public function aggregateMap(): VertexConnectionMap;
 
-    public function documentMap(): VertexMap;
+    public function documentMap(): VertexConnectionMap;
 
-    public function externalSystemMap(): VertexMap;
+    public function externalSystemMap(): VertexConnectionMap;
 
-    public function hotSpotMap(): VertexMap;
+    public function hotSpotMap(): VertexConnectionMap;
 
-    public function policyMap(): VertexMap;
+    public function policyMap(): VertexConnectionMap;
 
-    public function uiMap(): VertexMap;
+    public function uiMap(): VertexConnectionMap;
 
-    public function featureMap(): VertexMap;
+    public function featureMap(): VertexConnectionMap;
 
-    public function boundedContextMap(): VertexMap;
+    public function boundedContextMap(): VertexConnectionMap;
 }
