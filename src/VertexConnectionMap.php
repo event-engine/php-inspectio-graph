@@ -122,6 +122,12 @@ final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexC
      */
     public function findInGraph(string $startId, callable $callback, string $direction, int $maxSteps = 5): ?VertexConnection
     {
+        if ($maxSteps < 0) {
+            throw new RuntimeException(
+                \sprintf('The provided maxSteps "%s" must be greater than 0.', $maxSteps)
+            );
+        }
+
         if ($direction !== self::WALK_FORWARD
             && $direction !== self::WALK_BACKWARD
         ) {
