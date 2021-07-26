@@ -88,4 +88,9 @@ interface EventSourcingAnalyzer extends CanAccessVertexConnection
      * @return VertexConnectionMap
      */
     public function graph(): VertexConnectionMap;
+
+    /**
+     * Clear complete graph e.g. to start a new full sync
+     */
+    public function clearGraph(): void;
 }
