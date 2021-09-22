@@ -99,6 +99,18 @@ final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexC
         return $instance;
     }
 
+    public function filterByNameAndType(string $name, string $type): self
+    {
+        $instance = clone $this;
+        $instance->connections = \array_filter(
+            $instance->connections,
+            static fn (VertexConnection $identity) => $identity->identity()->name() === $name && $identity->identity()->type() === $type
+        );
+        \reset($instance->connections);
+
+        return $instance;
+    }
+
     public function filter(callable $callback): self
     {
         $instance = clone $this;
