@@ -158,12 +158,13 @@ final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexC
             );
         }
         $connection = $this->connections[$startId];
+        $maxSteps--;
 
         foreach ($connection->$direction() as $toConnection) {
             if ($callback($toConnection) === true) {
                 return $this->connections[$toConnection->id()];
             }
-            if ($found = $this->findInGraph($toConnection->id(), $callback, $direction, --$maxSteps)) {
+            if ($found = $this->findInGraph($toConnection->id(), $callback, $direction, $maxSteps)) {
                 return $found;
             }
         }
