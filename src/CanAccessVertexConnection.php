@@ -8,15 +8,11 @@
 
 declare(strict_types=1);
 
-$config = new Prooph\CS\Config\Prooph();
-$finder = $config->getFinder();
+namespace EventEngine\InspectioGraph;
 
-$finder->exclude('vendor');
-$finder->in(__DIR__);
-$finder->append(['.php_cs']);
+interface CanAccessVertexConnection
+{
+    public function has(string $id): bool;
 
-$cacheDir = \getenv('TRAVIS') ? \getenv('HOME') . '/.php-cs-fixer' : __DIR__;
-
-$config->setCacheFile($cacheDir . '/.php_cs.cache');
-
-return $config;
+    public function connection(string $id): VertexConnection;
+}

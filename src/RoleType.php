@@ -8,14 +8,8 @@
 
 declare(strict_types=1);
 
-namespace EventEngine\InspectioGraph\Metadata;
+namespace EventEngine\InspectioGraph;
 
-/**
- * @deprecated Use Has* interfaces instead
- */
-interface CommandMetadata extends Metadata
+interface RoleType extends VertexType
 {
-    public function newAggregate(): bool;
-
-    public function schema(): ?string;
 }

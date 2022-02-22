@@ -17,16 +17,25 @@ interface VertexType
     public const TYPE_COMMAND = 'command';
     public const TYPE_DOCUMENT = 'document';
     public const TYPE_POLICY = 'policy';
+    public const TYPE_EXTERNAL_SYSTEM = 'externalSystem';
+    public const TYPE_HOT_SPOT = 'hotSpot';
+    public const TYPE_ROLE = 'role';
     public const TYPE_UI = 'ui';
     public const TYPE_FEATURE = 'feature';
     public const TYPE_BOUNDED_CONTEXT = 'boundedContext';
 
-    public const ATTRIBUTE_LABEL = 'label';
-    public const ATTRIBUTE_TYPE = 'type';
-    public const ATTRIBUTE_METADATA = 'metadata';
-
+    /**
+     * Unique id in whole graph
+     *
+     * @return string
+     */
     public function id(): string;
 
+    /**
+     * Vertex type, one of VertexType::TYPE_* constants
+     *
+     * @return string
+     */
     public function type(): string;
 
     /**
@@ -44,9 +53,23 @@ interface VertexType
     public function name(): string;
 
     /**
-     * @return string
+     * Optional vertex metadata which can be JSON, XML, etc.
+     *
+     * @return ?string
      */
-    public function metadata(): string;
+    public function metadata(): ?string;
 
+    /**
+     * Optional an instance of the given metadata
+     *
+     * @return Metadata\Metadata|null
+     */
     public function metadataInstance(): ?Metadata\Metadata;
+
+    /**
+     * Use it only to sync latest data from event map
+     *
+     * @param VertexType $vertex
+     */
+    public function merge(VertexType $vertex): void;
 }

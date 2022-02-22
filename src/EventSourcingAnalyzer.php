@@ -10,11 +10,87 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph;
 
-interface EventSourcingAnalyzer
+interface EventSourcingAnalyzer extends CanAccessVertexConnection
 {
-    public function commandMap(): VertexMap;
+    /**
+     * Returns all command connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function commandMap(): VertexConnectionMap;
 
-    public function eventMap(): VertexMap;
+    /**
+     * Returns all event connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function eventMap(): VertexConnectionMap;
 
-    public function aggregateMap(): AggregateConnectionMap;
+    /**
+     * Returns all aggregate connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function aggregateMap(): VertexConnectionMap;
+
+    /**
+     * Returns all document connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function documentMap(): VertexConnectionMap;
+
+    /**
+     * Returns all external system connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function externalSystemMap(): VertexConnectionMap;
+
+    /**
+     * Returns all hot spot connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function hotSpotMap(): VertexConnectionMap;
+
+    /**
+     * Returns all policy connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function policyMap(): VertexConnectionMap;
+
+    /**
+     * Returns all ui connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function uiMap(): VertexConnectionMap;
+
+    /**
+     * Returns all feature connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function featureMap(): VertexConnectionMap;
+
+    /**
+     * Returns all bounded context connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function boundedContextMap(): VertexConnectionMap;
+
+    /**
+     * Returns whole graph with all connections. Can be used for searching of vertices or lookup of connections.
+     *
+     * @return VertexConnectionMap
+     */
+    public function graph(): VertexConnectionMap;
+
+    /**
+     * Clear complete graph e.g. to start a new full sync
+     */
+    public function clearGraph(): void;
 }

@@ -10,12 +10,10 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph\Metadata;
 
-/**
- * @deprecated Use Has* interfaces instead
- */
-interface EventMetadata extends Metadata
+interface HasCustomData
 {
-    public function public(): bool;
-
-    public function schema(): ?string;
+    /**
+     * @return mixed
+     */
+    public function customData();
 }
