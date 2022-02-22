@@ -13,15 +13,25 @@ namespace EventEngine\InspectioGraph;
 interface VertexType
 {
     public const TYPE_AGGREGATE = 'aggregate';
+
     public const TYPE_EVENT = 'event';
+
     public const TYPE_COMMAND = 'command';
+
     public const TYPE_DOCUMENT = 'document';
+
     public const TYPE_POLICY = 'policy';
+
     public const TYPE_EXTERNAL_SYSTEM = 'externalSystem';
+
     public const TYPE_HOT_SPOT = 'hotSpot';
+
     public const TYPE_ROLE = 'role';
+
     public const TYPE_UI = 'ui';
+
     public const TYPE_FEATURE = 'feature';
+
     public const TYPE_BOUNDED_CONTEXT = 'boundedContext';
 
     /**

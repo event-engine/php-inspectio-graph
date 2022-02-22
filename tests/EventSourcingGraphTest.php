@@ -19,9 +19,13 @@ use PHPUnit\Framework\TestCase;
 final class EventSourcingGraphTest extends TestCase
 {
     private const ID_ADD_BUILDING = '6e01ed33-8ab4-4c06-94f3-1574b319c94f';
+
     private const ID_BUILDING = '7910f5d7-9f33-4b9f-84c5-0fcc7c4d89d9';
+
     private const ID_BUILDING_ADDED = '30b10773-9453-4201-8e85-17c50468f6df';
+
     private const ID_FEATURE = '2c5b0bfa-32d5-4872-a7e6-ee00332c63cd';
+
     private const ID_DOCUMENT = 'c792635a-6ce4-4ad8-962a-1da0c22e0de4';
 
     /**
@@ -50,8 +54,10 @@ final class EventSourcingGraphTest extends TestCase
         $this->assertNotNull($commandAddBuildingConnection->parent());
 
         $this->assertSame($aggregateAddBuildingConnection->identity(), $commandAddBuildingConnection->to()->current());
-        $this->assertSame($commandAddBuildingConnection->identity(),
-            $aggregateAddBuildingConnection->from()->current());
+        $this->assertSame(
+            $commandAddBuildingConnection->identity(),
+            $aggregateAddBuildingConnection->from()->current()
+        );
 
         $this->assertSame($featureConnection->identity(), $commandAddBuildingConnection->parent());
         $this->assertSame($featureConnection->identity(), $aggregateAddBuildingConnection->parent());

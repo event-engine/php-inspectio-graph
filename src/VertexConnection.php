@@ -13,9 +13,13 @@ namespace EventEngine\InspectioGraph;
 final class VertexConnection
 {
     private VertexType $identity;
+
     private ?VertexType $parent = null;
+
     private VertexMap $children;
+
     private VertexMap $from;
+
     private VertexMap $to;
 
     public function __construct(VertexType $identity)

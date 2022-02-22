@@ -17,6 +17,7 @@ use Iterator;
 final class VertexConnectionMap implements Iterator, Countable, CanAccessVertexConnection
 {
     public const WALK_FORWARD = 'to';
+
     public const WALK_BACKWARD = 'from';
 
     /**
