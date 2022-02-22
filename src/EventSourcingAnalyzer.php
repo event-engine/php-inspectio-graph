@@ -69,6 +69,13 @@ interface EventSourcingAnalyzer extends CanAccessVertexConnection
     public function uiMap(): VertexConnectionMap;
 
     /**
+     * Returns all role connections
+     *
+     * @return VertexConnectionMap
+     */
+    public function roleMap(): VertexConnectionMap;
+
+    /**
      * Returns all feature connections
      *
      * @return VertexConnectionMap
