@@ -10,10 +10,9 @@ declare(strict_types=1);
 
 namespace EventEngine\InspectioGraph\Metadata;
 
-/**
- * @deprecated Use Has* interfaces instead
- */
-interface AggregateMetadata extends Metadata
+use EventEngine\InspectioGraph\VertexConnectionMap;
+
+interface ResolvesMetadataReference
 {
-    public function schema(): ?string;
+    public function resolveMetadataReferences(VertexConnectionMap $vertexConnectionMap, callable $filterName): void;
 }
